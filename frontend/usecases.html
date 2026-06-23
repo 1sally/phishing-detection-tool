@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PhishDetector | Usecases</title>
+  <meta content="Real phishing examples and scenarios used for awareness training." name="description">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/img/newlogo.jpg') }}" rel="icon">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/icofont/icofont.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/owl.carousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/venobox/venobox.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+
+  <style>
+    .usecase-image {
+      width: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <h1 class="logo mr-auto"><a href="{{ url_for('home') }}">PhishDetector</a></h1>
+      <a href="{{ url_for('home') }}" class="logo mr-auto"><img src="{{ url_for('static', filename='assets/img/newlogo.jpg') }}" alt="PhishDetector logo" class="img-fluid"></a>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a onclick="scrollToSection('about')" style="cursor: pointer;">About</a></li>
+          <li class="active"><a href="{{ url_for('usecases') }}">Usecases</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="faq" class="faq">
+    <div class="container" data-aos="fade-up">
+      <h2 style="text-align: center; margin-top: 100px; font-size: 30px; font-weight: 700;">Real-world phishing breach scenarios</h2>
+
+      <div class="faq-list" style="margin-top: 25px;">
+        <ul>
+          <li data-aos="fade-up" data-aos-delay="100">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a data-toggle="collapse" class="collapse" href="#faq-list-1">Use case #1: John Podesta email breach <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-1" class="collapse show" data-parent=".faq-list">
+              <p>A phishing email impersonating Google tricked users with access to John Podesta's Gmail account into following a malicious password reset link. The attackers then accessed the mailbox and leaked thousands of emails.</p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="200">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a data-toggle="collapse" href="#faq-list-2" class="collapsed">Use case #2: BenefitMall credential exposure <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-2" class="collapse" data-parent=".faq-list">
+              <p>Employee email credentials were exposed during a phishing campaign, which allowed unauthorized access to mailboxes containing names, birth dates, bank account information, and insurance payment data.</p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="300">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a data-toggle="collapse" href="#faq-list-3" class="collapsed">Use case #3: Sony Pictures attack <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-3" class="collapse" data-parent=".faq-list">
+              <p>Phishing and spear-phishing emails carrying malware helped attackers infiltrate Sony Pictures, steal sensitive company data, and disrupt internal systems at massive financial cost.</p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="400">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a data-toggle="collapse" href="#faq-list-4" class="collapsed">Use case #4: Methodist Hospitals compromise <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-4" class="collapse" data-parent=".faq-list">
+              <p>Suspicious mailbox activity eventually revealed a phishing incident that exposed patient information including addresses, insurance details, Social Security numbers, and treatment records.</p>
+            </div>
+          </li>
+
+          <li data-aos="fade-up" data-aos-delay="500">
+            <i class="bx bx-help-circle icon-help"></i>
+            <a data-toggle="collapse" href="#faq-list-5" class="collapsed">Use case #5: University payment fraud <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+            <div id="faq-list-5" class="collapse" data-parent=".faq-list">
+              <p>A phishing message convinced an employee to change vendor routing numbers, which led to fraudulent bank transfers and a substantial financial loss before the problem was discovered.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Why these cases matter</h2>
+          <p>Real phishing incidents show how a single deceptive email or fake login page can lead to major data loss, credential theft, or direct financial damage. Awareness is still one of the strongest defenses.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container" data-aos="fade-up">
+        <div class="owl-carousel testimonials-carousel">
+          <div class="testimonial-item">
+            <img src="{{ url_for('static', filename='assets/img/pic1.png') }}" alt="Example phishing PayPal email" class="usecase-image">
+            <p style="font-size: 12px;"><b>Description:</b> A fake PayPal security notice that creates urgency around suspicious login activity.</p>
+          </div>
+
+          <div class="testimonial-item">
+            <img src="{{ url_for('static', filename='assets/img/pic2.png') }}" alt="Fake Gmail login page" class="usecase-image">
+            <p style="font-size: 12px;"><b>Description:</b> A fake Gmail login page that imitates Google's design but uses a malicious URL.</p>
+          </div>
+
+          <div class="testimonial-item">
+            <img src="{{ url_for('static', filename='assets/img/pic3.png') }}" alt="LinkedIn phishing example" class="usecase-image">
+            <p style="font-size: 12px;"><b>Description:</b> A LinkedIn-themed phishing message that redirects users to a credential theft page.</p>
+          </div>
+
+          <div class="testimonial-item">
+            <img src="{{ url_for('static', filename='assets/img/pic4.png') }}" alt="Malicious attachment example" class="usecase-image">
+            <p style="font-size: 12px;"><b>Description:</b> A document-based phishing lure that can hide malicious macros or malware payloads.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <script src="{{ url_for('static', filename='assets/vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/owl.carousel/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/venobox/venobox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+  <script>
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    }
+
+    AOS.init({
+      duration: 700,
+      once: true
+    });
+  </script>
+</body>
+
+</html>

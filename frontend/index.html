@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>PhishDetector</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Lora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/img/newlogo.jpg') }}" rel="icon">
+  <link href="{{ url_for('static', filename='assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/icofont/icofont.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/owl.carousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/venobox/venobox.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+
+  <style>
+    .shimmer-animated {
+      font-weight: 700;
+      background: linear-gradient(90deg, #fff 0%, #00c3ff 50%, #fff 100%);
+      background-size: 200% auto;
+      color: #fff;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerEffect 3s infinite linear;
+      display: inline-block;
+    }
+
+    @keyframes shimmerEffect {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    .logo a.shimmer-animated {
+      font-size: 28px;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .scanner-container {
+      position: relative;
+      overflow: hidden;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform-style: preserve-3d;
+      width: 100%;
+      max-width: 680px;
+      transition: 0.5s;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .laser-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: #00f3ff;
+      box-shadow: 0 0 20px #00f3ff, 0 0 40px #00f3ff;
+      z-index: 10;
+      display: none;
+    }
+
+    @keyframes scanMove {
+      0% {
+        top: 0;
+      }
+
+      100% {
+        top: 100%;
+      }
+    }
+
+    .safe-glow {
+      border: 2px solid #00ff88 !important;
+      box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    }
+
+    .danger-glow {
+      border: 2px solid #ff4d4d !important;
+      box-shadow: 0 0 30px rgba(255, 77, 77, 0.4);
+      animation: shake 0.4s;
+    }
+
+    .error-glow {
+      border: 2px solid #ffb347 !important;
+      box-shadow: 0 0 30px rgba(255, 179, 71, 0.35);
+    }
+
+    @keyframes shake {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-5px);
+      }
+
+      75% {
+        transform: translateX(5px);
+      }
+    }
+
+    .scanner-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .scanner-helper {
+      margin-top: 14px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.95rem;
+    }
+
+    .status-note {
+      margin-top: 14px;
+      margin-bottom: 0;
+      color: #cfd8dc;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .name-list {
+      margin-top: 20px;
+    }
+
+    .name-item {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .scanner-container {
+        padding: 28px 18px;
+      }
+
+      .logo a.shimmer-animated {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+      <h1 class="logo mr-auto"><a href="{{ url_for('home') }}" class="shimmer-animated">PhishDetector</a></h1>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="drop-down">
+            <a href="#">Menu</a>
+            <ul>
+              <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+              <li><a onclick="scrollToSection('about')" style="cursor: pointer;">About</a></li>
+              <li><a href="{{ url_for('usecases') }}">Usecases</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container d-flex flex-column align-items-center justify-content-center" data-aos="fade-up">
+      <h1 style="text-align: center; margin-bottom: 30px;">FAKE WEBSITE DETECTION</h1>
+
+      <div class="scanner-container" id="mainScanner">
+        <div id="laser" class="laser-line"></div>
+
+        <form id="urlForm" class="form">
+          <div style="position: relative;">
+            <input
+              type="text"
+              id="urlInput"
+              name="name"
+              class="form-control"
+              value="{{ scan_input or '' }}"
+              placeholder="Enter a website URL, e.g. example.com or https://example.com"
+              autocomplete="off"
+              spellcheck="false"
+              required
+              style="height: 55px; background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2);">
+          </div>
+
+          <div class="text-center mt-4">
+            <button id="scanButton" type="submit" class="btn btn-info btn-lg px-5" style="border-radius: 50px; font-weight: bold; background: #00c3ff; border: none;">SCAN URL</button>
+          </div>
+
+          <p class="scanner-helper">The scanner uses the trained phishing model from the Flask backend.</p>
+        </form>
+
+        <div id="result" style="margin-top: 25px; display: none; text-align: center;">
+          <p id="urlDisplay" style="color: #ccc; font-style: italic; word-break: break-all;"></p>
+          <h2 id="resultText" style="font-weight: bold;"></h2>
+          <p id="statusNote" class="status-note"></p>
+
+          <div id="actionButtons" class="scanner-actions mt-4">
+            <button id="openBtn" type="button" class="btn btn-success btn-action" style="display: none;">Open / Visit</button>
+            <button id="visitAnywayBtn" type="button" class="btn btn-outline-danger btn-action" style="display: none;">Visit Anyway</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="main">
+    <section id="faq" class="faq">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title"><h2>F.A.Q</h2></div>
+        <div class="faq-list">
+          <ul>
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" class="collapse" href="#faq1">What is phishing? <i class="bx bx-chevron-down icon-show"></i></a>
+              <div id="faq1" class="collapse show" data-parent=".faq-list">
+                <p>Phishing is a cybercrime in which an attacker impersonates a trusted brand or person to trick users into sharing passwords, payment data, or other sensitive information.</p>
+              </div>
+            </li>
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" class="collapsed" href="#faq2">How does this scanner work? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq2" class="collapse" data-parent=".faq-list">
+                <p>The app extracts URL and page-based features from the submitted link, then sends them to the trained machine learning model to estimate whether the site is safe or suspicious.</p>
+              </div>
+            </li>
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" class="collapsed" href="#faq3">What should I do if the result is risky? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq3" class="collapse" data-parent=".faq-list">
+                <p>Avoid logging in, entering card details, or downloading files until you verify the URL independently. Check the domain carefully and compare it with the official website.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>About PhishDetector</h2>
+          <p>This project helps users validate website URLs with a machine learning model that flags suspicious phishing behavior before they decide to continue.</p>
+          <hr style="border-top: 1px solid rgba(0, 195, 255, 0.2); width: 50%; margin: 20px auto;">
+
+          <h3 style="color: #00c3ff; margin-bottom: 20px;">Our Team</h3>
+          <div class="name-list">
+            <span class="shimmer-animated name-item">Hassan Ragab</span>
+            <span class="shimmer-animated name-item">Mahmoud Mohamed</span>
+            <span class="shimmer-animated name-item">Salma Mansour</span>
+            <span class="shimmer-animated name-item">Yassin Salem</span>
+            <span class="shimmer-animated name-item">Youssef Mostafa</span>
+          </div>
+
+          <h3 style="color: #00c3ff; margin-top: 40px; margin-bottom: 20px;">Supervised By</h3>
+          <div class="name-list">
+            <span class="shimmer-animated h5 d-block" style="animation-delay: 0.5s;">DR: Riham Eissa</span>
+            <span class="shimmer-animated h5 d-block" style="animation-delay: 1s;">DR: Amira Al-Attar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='assets/vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/aos/aos.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
+  <script>
+    const scanApiUrl = "{{ url_for('scan_api') }}";
+    const initialScanResult = {{ initial_result | tojson if initial_result else 'null' }};
+    const initialScanError = {{ scan_error | tojson if scan_error else 'null' }};
+
+    const scannerBox = document.getElementById("mainScanner");
+    const laser = document.getElementById("laser");
+    const form = document.getElementById("urlForm");
+    const urlInput = document.getElementById("urlInput");
+    const resultBox = document.getElementById("result");
+    const urlDisplay = document.getElementById("urlDisplay");
+    const resultText = document.getElementById("resultText");
+    const statusNote = document.getElementById("statusNote");
+    const scanButton = document.getElementById("scanButton");
+    const openBtn = document.getElementById("openBtn");
+    const visitAnywayBtn = document.getElementById("visitAnywayBtn");
+
+    VanillaTilt.init(scannerBox, {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.3
+    });
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    }
+
+    function resetResultState() {
+      resultBox.style.display = "none";
+      resultText.textContent = "";
+      statusNote.textContent = "";
+      urlDisplay.textContent = "";
+      scannerBox.classList.remove("safe-glow", "danger-glow", "error-glow");
+      openBtn.style.display = "none";
+      visitAnywayBtn.style.display = "none";
+      openBtn.onclick = null;
+      visitAnywayBtn.onclick = null;
+    }
+
+    function bindActionButton(button, label, targetUrl) {
+      button.textContent = label;
+      button.style.display = "inline-block";
+      button.onclick = () => window.open(targetUrl, "_blank", "noopener");
+    }
+
+    function renderResult(data) {
+      resultBox.style.display = "block";
+      urlDisplay.textContent = data.url;
+      resultText.textContent = data.is_safe ? "WEBSITE IS SAFE" : "PHISHING RISK DETECTED";
+      resultText.style.color = data.is_safe ? "#00ff88" : "#ff4d4d";
+      statusNote.textContent = data.message;
+
+      if (data.is_safe) {
+        scannerBox.classList.add("safe-glow");
+        bindActionButton(openBtn, data.action_label || "Open / Visit", data.url);
+      } else {
+        scannerBox.classList.add("danger-glow");
+        bindActionButton(visitAnywayBtn, data.action_label || "Visit Anyway", data.url);
+      }
+    }
+
+    function renderError(message, urlValue) {
+      resultBox.style.display = "block";
+      urlDisplay.textContent = urlValue || "";
+      resultText.textContent = "SCAN FAILED";
+      resultText.style.color = "#ffb347";
+      statusNote.textContent = message;
+      scannerBox.classList.add("error-glow");
+    }
+
+    async function runScan(rawUrl) {
+      const response = await fetch(scanApiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ url: rawUrl })
+      });
+
+      let payload = null;
+      try {
+        payload = await response.json();
+      } catch (error) {
+        payload = null;
+      }
+
+      if (!response.ok) {
+        throw new Error((payload && payload.error) || "Unable to scan this URL right now.");
+      }
+
+      return payload;
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const rawUrl = urlInput.value.trim();
+      if (!rawUrl) {
+        return;
+      }
+
+      resetResultState();
+      scanButton.disabled = true;
+      scanButton.textContent = "SCANNING...";
+      laser.style.display = "block";
+      laser.style.animation = "scanMove 1.5s infinite linear";
+
+      const animationDelay = new Promise((resolve) => setTimeout(resolve, 1500));
+
+      try {
+        const [scanData] = await Promise.all([runScan(rawUrl), animationDelay]);
+        renderResult(scanData);
+      } catch (error) {
+        await animationDelay;
+        renderError(error.message, rawUrl);
+      } finally {
+        laser.style.display = "none";
+        laser.style.animation = "none";
+        scanButton.disabled = false;
+        scanButton.textContent = "SCAN URL";
+      }
+    });
+
+    if (initialScanResult) {
+      renderResult(initialScanResult);
+    } else if (initialScanError) {
+      renderError(initialScanError, urlInput.value.trim());
+    }
+
+    AOS.init({
+      duration: 700,
+      once: true
+    });
+  </script>
+</body>
+
+</html>
